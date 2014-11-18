@@ -80,6 +80,9 @@ int main(int argc, char *argv[])
 	std::cout << "min size: " << ARRAY_MIN_SIZE << ", max size: " << ARRAY_MAX_SIZE << ", step: " << std::endl;
 	std::cout << "max array size: " << ARRAY_MAX_SIZE*ARRAY_MAX_SIZE*sizeof(int) << " bytes" << std::endl;
 
+	std::cout << std::fixed;
+	std::cout.precision(1);
+
 	runTest(ARRAY_MIN_SIZE, ARRAY_MAX_SIZE, ARRAY_STEP, ITERS, true);
 	runTest(ARRAY_MIN_SIZE, ARRAY_MAX_SIZE, ARRAY_STEP, ITERS, false);
 

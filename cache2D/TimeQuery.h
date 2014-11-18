@@ -1,26 +1,24 @@
 #pragma once
 
-#include <chrono>
+#include <windows.h>
 
 class CpuTimeQuery
 {
 protected:
 	double m_time;
-
-protected:
-	std::chrono::time_point<std::chrono::system_clock> m_cpuTimePointStart;
+	LARGE_INTEGER startTime, endTime, freqTime;
 
 public:
 	void begin()
 	{
-		m_cpuTimePointStart = std::chrono::system_clock::now();
+		QueryPerformanceFrequency(&freqTime);
+		QueryPerformanceCounter(&startTime);
 	}
 
 	void end()
 	{
-		auto diff = std::chrono::system_clock::now() - m_cpuTimePointStart;
-		auto mili = std::chrono::duration_cast<std::chrono::milliseconds>(diff).count();
-		m_time = static_cast<double>(mili);
+		QueryPerformanceCounter(&endTime);
+		m_time = (double)(endTime.QuadPart - startTime.QuadPart) * 1000.0 / (double)freqTime.QuadPart;
 	}
 
 	double timeInMilisec() const { return m_time; }
